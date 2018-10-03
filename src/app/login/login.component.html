@@ -1,8 +1,8 @@
 <table>
   <!-- Input fields -->
-  <tr><td>Username</td><td><input #inpName /></td></tr>
-  <tr><td>Password</td><td><input type="password" #inpPassword /></td></tr>
-  <tr><td>Email</td><td><input #inpEmail /></td></tr>
+  <tr><td>Username</td><td><input [(ngModel)]="inputName" /></td></tr>
+  <tr><td>Password</td><td><input type="password" [(ngModel)]="inputPassword" /></td></tr>
+  <tr><td>Email</td><td><input [(ngModel)]="inputEmail" placeholder="Only for registration" /></td></tr>
   
   <!-- Action buttons -->
   <tr><td></td><td>

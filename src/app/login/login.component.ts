@@ -1,3 +1,4 @@
+import { ArticleService } from './../service/article.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -7,25 +8,36 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild("inpName") private inpName;
-  @ViewChild("inpPassword") private inpPassword;
-  @ViewChild("inpEmail") private inpEmail;
-
   @ViewChild("btnLogin") private btnLogin;
   @ViewChild("btnRegister") private btnRegister;
 
-  constructor() { }
+  private inputName: string;
+  private inputPassword: string;
+  private inputEmail: string;
+
+  constructor(
+    private articleService: ArticleService
+  ) { }
 
   ngOnInit() {
     console.log(this.btnLogin);
   }
 
   login() {
-    console.log('login clicked');
+    console.log('login clicasdfked test');
   }
 
   register() {
-    
+    // TODO: disable buttons until response received
+    this.articleService.register({
+      email: this.inputEmail,
+      name: this.inputName,
+      password: this.inputPassword
+    }, function() {
+      console.log('Registered!');
+    }.bind(this), function() {
+      console.log('Failed!');
+    }.bind(this));
   }
 
 }
