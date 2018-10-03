@@ -1,7 +1,8 @@
+import { Question } from './question';
 import { Injectable } from '@angular/core';
 
 export interface UserData {
-  email: string,
+  email?: string,
   name: string,
   password: string
 }
@@ -16,28 +17,88 @@ export class ArticleService {
   private username: string;
   private password: string;
 
+  private questions: Question[];
+
   constructor() {
 
   }
 
-  register(userData: UserData, onsuccess, onfailed) {
-    let request = new XMLHttpRequest();
+  login(userData: UserData, onsuccess, onerror) {
+    let url = ArticleService.API_URL + "auth/login";
+    this.post(url, userData, function(response) {
+      if (response == true) {
+        this.username = userData.name;
+        this.password = userData.password;
+        onsuccess();
+      } else {
+        // TODO: show wrong credentials
+        onerror();
+      }
+    }.bind(this), onerror);
+  }
+
+  register(userData: UserData, onsuccess, onerror) {
+    let url = ArticleService.API_URL + "auth/register";
+    this.post(url, userData, function(response) {
+      this.username = userData.name;
+      this.password = userData.password;
+      onsuccess();
+    }.bind(this), onerror);
+  }
+
+  nextArticle(onsuccess, onerror) {
+    let url = ArticleService.API_URL + "api/next-article";
+    this.get(url, function(response) {
+      onsuccess(response);
+    }.bind(this), onerror);
+  }
+
+  getQuestions(): Question[] {
+    return this.questions;
+  }
+  
+  loadQuestions(onsuccess, onerror) {
+    let url = ArticleService.API_URL + "api/labels";
+    this.get(url, function(response) {
+      this.questions = response;
+      onsuccess(response);
+    }.bind(this), onerror);
+  }
+
+  submitLabels(labels, onsuccess, onerror) {
+    let url = ArticleService.API_URL + "api/submit";
+    this.post(url, labels, onsuccess, onerror);
+  }
+
+  private get(url: string, onsuccess, onerror) {
+    this.sendRequest(url, 'GET', null, onsuccess, onerror);
+  }
+
+  private post(url: string, data, onsuccess, onerror) {
+    this.sendRequest(url, 'POST', data, onsuccess, onerror);
+  }
+
+  private sendRequest(url: string, method: string, data, onsuccess, onerror) {let request = new XMLHttpRequest();
     request.onreadystatechange = function() {
       if (request.readyState == 4) {
         if (request.status === 200) {
-          this.username = userData.name;
-          this.password = userData.password;
-          onsuccess();
+          if (request.response) {
+            onsuccess(JSON.parse(request.response));
+          } else {
+            onsuccess(null);
+          }
         } else {
-          onfailed();
+          onerror();
         }
       }
     }.bind(this);
-
-    let url = ArticleService.API_URL + "auth/register";
-    request.open("POST", url, true);
+    request.open(method, url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify(userData));
+    if (this.username && this.password) {
+      request.setRequestHeader("Username", this.username);
+      request.setRequestHeader("Password", this.password);
+    }
+    request.send(JSON.stringify(data));
   }
 
 }

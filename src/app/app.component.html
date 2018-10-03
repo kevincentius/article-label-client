@@ -1,1 +1,3 @@
-<app-login></app-login>
+<app-login #login [hidden]="screen!='login'"></app-login>
+<app-info-screen #infoScreen [hidden]="screen!='info'"></app-info-screen>
+<app-article-form #articleForm [hidden]="screen!='article'"></app-article-form>

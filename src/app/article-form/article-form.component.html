@@ -1,0 +1,22 @@
+<div *ngIf="article">
+  <div>{{article.title}}</div>
+  <div>{{article.content}}</div>
+
+  <div *ngIf="inputs">
+    <div *ngFor="let inp of inputs">
+      <div>{{inp.question.name}}</div>
+      <div *ngFor="let choice of inp.question.choices"
+        (click)="select(inp, choice)"
+        [ngClass]='{"choice-selected": inp.value===choice.id}'>
+        {{choice.name}}
+      </div>
+    </div>
+  
+    <button (click)="submit()">Submit</button>
+  </div>
+</div>
+
+<div *ngIf="!article">
+    <div>No more articles.</div>
+  </div>
+  

@@ -1,0 +1,8 @@
+<div *ngIf="questions">
+  <div *ngFor="let question of questions">
+    <div>{{question.name}}</div>
+    <div>{{question.description}}</div>
+  </div>
+
+  <button (click)="onContinue()">Continue</button>
+</div>
