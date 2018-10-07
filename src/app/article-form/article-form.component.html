@@ -1,22 +1,25 @@
 <div *ngIf="article">
-  <div>{{article.title}}</div>
-  <div>{{article.content}}</div>
+  <div class="title">{{article.title}}</div>
+  <div class="content">{{article.content}}</div>
 
   <div *ngIf="inputs">
-    <div *ngFor="let inp of inputs">
-      <div>{{inp.question.name}}</div>
+    <div *ngFor="let inp of inputs" [ngClass]='{"question": true, "empty": !inp.value}'>
+      <div class="question_name">{{inp.question.name}}</div>
       <div *ngFor="let choice of inp.question.choices"
         (click)="select(inp, choice)"
-        [ngClass]='{"choice-selected": inp.value===choice.id}'>
+        [ngClass]='{"choice-selected": inp.value===choice.id, "question_choice": true}'
+      >
         {{choice.name}}
       </div>
     </div>
   
-    <button (click)="submit()">Submit</button>
+    <button (click)="submit()" [disabled]="!submitEnabled">Submit</button>
+    <button (click)="onBack()">Back</button>
   </div>
 </div>
 
 <div *ngIf="!article">
-    <div>No more articles.</div>
-  </div>
+  <div>All articles have been reviewed.</div>
+  <button (click)="onBack()">Back</button>
+</div>
   

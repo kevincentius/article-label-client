@@ -22,6 +22,7 @@ export class AppComponent {
 
   ngAfterViewInit(): void {
     this.login.onLogin = this.onLogin.bind(this);
+    this.articleForm.onBack = this.onBack.bind(this);
   }
 
   onLogin() {
@@ -31,6 +32,10 @@ export class AppComponent {
     }.bind(this), function() {
       console.log('TODO: handle error');
     }.bind(this));
+  }
+
+  onBack() {
+    this.screen = "info";
   }
 
   enterArticle() {

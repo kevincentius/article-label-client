@@ -1,7 +1,7 @@
 <div *ngIf="questions">
-  <div *ngFor="let question of questions">
-    <div>{{question.name}}</div>
-    <div>{{question.description}}</div>
+  <div *ngFor="let question of questions" class="question">
+    <div class="question_name">{{question.name}}</div>
+    <div class="question_description" [innerHTML]="question.description"></div>
   </div>
 
   <button (click)="onContinue()">Continue</button>

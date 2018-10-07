@@ -6,7 +6,13 @@
   
   <!-- Action buttons -->
   <tr><td></td><td>
-    <button #btnLogin (click)="login()">Login</button>
-    <button #btnRegister (click)="register()">Register</button>
+    <button
+      #btnLogin
+      [disabled]="!(inputName && inputPassword)"
+      (click)="login()">Login</button>
+    <button
+      #btnRegister
+      [disabled]="!(inputName && inputPassword && inputEmail)"
+      (click)="register()">Register</button>
   </td></tr>
 </table>

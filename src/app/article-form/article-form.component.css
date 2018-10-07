@@ -1,3 +1,41 @@
+.title {
+	font-size: 150%;
+	padding-left: 10px 20px;
+}
+
+.content {
+	margin-bottom: 40px;
+	white-space: pre-wrap;
+}
+
+.question {
+    margin-bottom: 10px;
+    padding: 5px;
+    background: #dfd;
+}
+
+.question.empty {
+	background: #ffa;
+}
+
+.question_name {
+	font-size: 125%;
+	font-weight: bold;
+}
+
+.question_choice {
+	padding-left: 25px;
+}
+
+.question_choice:hover {
+	background: #fff;
+}
+
 .choice-selected {
-	background: #ddd;
+	background: #8e8;
+	font-weight: bold;
+}
+
+.question_choice.choice-selected:hover {
+	background: #bfb;
 }

@@ -15,8 +15,11 @@ interface QuestionInput {
 })
 export class ArticleFormComponent {  
 
+  onBack = () => {};
+  
   private article: Article;
   private inputs: QuestionInput[];
+  private submitEnabled = false;
 
   constructor(
     private articleService: ArticleService
@@ -27,7 +30,6 @@ export class ArticleFormComponent {
   }
 
   showArticle(article: Article) {
-    // TODO: if article is null
     this.article = article;
 
     this.inputs = [];
@@ -44,8 +46,15 @@ export class ArticleFormComponent {
   }
 
   select(inp: QuestionInput, choice: Choice) {
-    console.log('selected', choice, inp);
     inp.value = choice.id;
+
+    this.submitEnabled = true;
+    for (let inp of this.inputs) {
+      if (!inp.value) {
+        this.submitEnabled = false;
+        break;
+      }
+    }
   }
 
   submit() {
