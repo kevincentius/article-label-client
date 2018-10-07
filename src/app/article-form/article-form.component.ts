@@ -16,16 +16,22 @@ interface QuestionInput {
 export class ArticleFormComponent {  
 
   onBack = () => {};
-  
+
   private article: Article;
   private inputs: QuestionInput[];
-  private submitEnabled = false;
+
+  // angular models
+  public enabled = true;
+  public submitEnabled = false;
+  public loading = false;
+  public error;
 
   constructor(
     private articleService: ArticleService
   ) { }
 
   nextArticle() {
+    this.loading = true;
     this.articleService.nextArticle(this.showArticle.bind(this), this.showError.bind(this));
   }
 
@@ -39,10 +45,15 @@ export class ArticleFormComponent {
         value: null
       });
     }
+    
+    this.loading = false;
+    this.enabled = true;
   }
 
   showError() {
-    console.log('TODO: show error');
+    this.error = "Failed to retrieve article from the server.";
+    this.loading = false;
+    this.enabled = false;
   }
 
   select(inp: QuestionInput, choice: Choice) {
@@ -59,8 +70,7 @@ export class ArticleFormComponent {
 
   submit() {
     if (this.validate()) {
-      // TODO: disable inputs until next showArticle
-      console.log('submit');
+      this.enabled = false;
       let labels = [];
       for (let inp of this.inputs) {
         labels.push({
@@ -75,7 +85,9 @@ export class ArticleFormComponent {
       }
 
       this.articleService.submitLabels(data, this.showArticle.bind(this), function() {
-        console.log('TODO: handle error');
+        this.error = "Failed to submit labels to the server.";
+        this.loading = false;
+        this.enabled = false;
       }.bind(this));
     }
   }

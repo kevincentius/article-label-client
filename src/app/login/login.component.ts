@@ -17,32 +17,37 @@ export class LoginComponent {
 
   public onLogin = () => {};
 
+  // angular models
+  public enabled = true;
+  public error;
+
   constructor(
     private articleService: ArticleService
   ) { }
 
   login() {
-    // TODO: disable buttons until response received
+    this.enabled = false;
     this.articleService.login({
       name: this.inputName,
       password: this.inputPassword
-    }, function() {
-      this.onLogin();
+    }, this.onLogin, function() {
+      this.enabled = true;
+      this.error = "Wrong credentials.";
     }.bind(this), function() {
-      console.log('Login failed');
+      this.enabled = true;
+      this.error = "An unexpected error has occurred.";
     }.bind(this));
   }
 
   register() {
-    // TODO: disable buttons until response received
+    this.enabled = false;
     this.articleService.register({
       email: this.inputEmail,
       name: this.inputName, 
       password: this.inputPassword
-    }, function() {
-      this.onLogin();
-    }.bind(this), function() {
-      console.log('Failed!');
+    }, this.onLogin, function() {
+      this.enabled = true;
+      this.error = "An unexpected error has occurred.";
     }.bind(this));
   }
 

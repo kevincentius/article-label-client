@@ -23,7 +23,7 @@ export class ArticleService {
 
   }
 
-  login(userData: UserData, onsuccess, onerror) {
+  login(userData: UserData, onsuccess, onwrong, onerror) {
     let url = ArticleService.API_URL + "auth/login";
     this.post(url, userData, function(response) {
       if (response == true) {
@@ -32,7 +32,7 @@ export class ArticleService {
         onsuccess();
       } else {
         // TODO: show wrong credentials
-        onerror();
+        onwrong();
       }
     }.bind(this), onerror);
   }
