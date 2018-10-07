@@ -14,8 +14,8 @@ export class ArticleService {
 
   private static API_URL = 'http://localhost:8080/';
 
-  private username: string;
-  private password: string;
+  username: string;
+  password: string;
 
   private questions: Question[];
 
@@ -31,10 +31,14 @@ export class ArticleService {
         this.password = userData.password;
         onsuccess();
       } else {
-        // TODO: show wrong credentials
         onwrong();
       }
     }.bind(this), onerror);
+  }
+
+  logout() {
+    this.username = null;
+    this.password = null;
   }
 
   register(userData: UserData, onsuccess, onerror) {

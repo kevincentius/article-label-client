@@ -1,0 +1,25 @@
+
+.header {
+	display: flex;
+	background: #000;
+    color: #fff;
+    font-size: 75%;
+    padding: 3px 25px;
+}
+
+.header_title {
+	flex-grow: 1;
+}
+
+.header_logout {
+	margin-left: 15px;
+}
+
+.header_logout:hover {
+	color: #07f;
+	cursor: pointer;
+}
+
+.content {
+	padding: 20px 50px;
+}

@@ -14,6 +14,7 @@ export class AppComponent {
   @ViewChild("infoScreen") private infoScreen: InfoScreenComponent;
   @ViewChild("articleForm") private articleForm: ArticleFormComponent;
 
+  // angular models
   screen = "login";
 
   constructor(
@@ -32,6 +33,12 @@ export class AppComponent {
     }.bind(this), function() {
       console.log('TODO: handle error');
     }.bind(this));
+  }
+
+  logout() {
+    this.articleService.logout();
+    this.screen = "login";
+    this.login.reset();
   }
 
   onBack() {

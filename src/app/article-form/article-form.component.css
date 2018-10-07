@@ -29,6 +29,7 @@
 
 .question_choice:hover {
 	background: #fff;
+	cursor: pointer;
 }
 
 .choice-selected {

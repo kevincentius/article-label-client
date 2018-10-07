@@ -19,7 +19,7 @@ export class LoginComponent {
 
   // angular models
   public enabled = true;
-  public error;
+  public message = 'Please login';
 
   constructor(
     private articleService: ArticleService
@@ -32,10 +32,10 @@ export class LoginComponent {
       password: this.inputPassword
     }, this.onLogin, function() {
       this.enabled = true;
-      this.error = "Wrong credentials.";
+      this.message = "Wrong credentials.";
     }.bind(this), function() {
       this.enabled = true;
-      this.error = "An unexpected error has occurred.";
+      this.message = "An unexpected error has occurred.";
     }.bind(this));
   }
 
@@ -47,8 +47,16 @@ export class LoginComponent {
       password: this.inputPassword
     }, this.onLogin, function() {
       this.enabled = true;
-      this.error = "An unexpected error has occurred.";
+      this.message = "An unexpected error has occurred.";
     }.bind(this));
+  }
+
+  reset() {
+    this.message = 'Please login';
+    this.enabled = true;
+    this.inputName = '';
+    this.inputPassword = '';
+    this.inputEmail = '';
   }
 
 }
